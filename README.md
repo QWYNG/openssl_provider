@@ -25,7 +25,7 @@ require 'openssl_provider'
 legacy = OpenSSL::Provider.load("legacy")
 
 OpenSSL::Provider.providers
-# => => [#<OpenSSL::Provider name="default">, #<OpenSSL::Provider name="legacy">]
+# => [#<OpenSSL::Provider name="default">, #<OpenSSL::Provider name="legacy">]
 
 # default provider does not support RC4
 # OpenSSL::Cipher.new("RC4")
