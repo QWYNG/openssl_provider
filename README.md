@@ -1,8 +1,11 @@
-# OpensslProvider
+# OpenSSL::Provider
+The concept of provider was introduced with OpenSSL 3.
+https://www.openssl.org/docs/man3.0/man7/migration_guide.html
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/openssl_provider`. To experiment with that code, run `bin/console` for an interactive prompt.
+With OpenSSL 3, it is possible to specify the provider to be used by any application, either programmatically or through a configuration file.
+However, `ruby/openssl` 3.1.0 does not have an API to load providers without configuration file.
+This Gem provides `OpenSSL::Provider` class with APIs to load providers.
 
-TODO: Delete this and the text above, and describe your gem
 
 ## Installation
 
@@ -16,17 +19,27 @@ If bundler is not being used to manage dependencies, install the gem by executin
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+require 'openssl_provider'
 
-## Development
+legacy = OpenSSL::Provider.load("legacy")
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test-unit` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+OpenSSL::Provider.providers
+# => => [#<OpenSSL::Provider name="default">, #<OpenSSL::Provider name="legacy">]
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+# default provider does not support RC4
+# OpenSSL::Cipher.new("RC4")
+# => OpenSSL::Cipher::CipherError: unsupported
+cipher = OpenSSL::Cipher.new("RC4")
+
+# do something with cipher...
+
+OpenSSL::Provider.unload(legacy)
+```
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/openssl_provider. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/openssl_provider/blob/main/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/QWYNG/openssl_provider. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/QWYNG/openssl_provider/blob/main/CODE_OF_CONDUCT.md).
 
 ## License
 
@@ -34,4 +47,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the OpensslProvider project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/openssl_provider/blob/main/CODE_OF_CONDUCT.md).
+Everyone interacting in the OpensslProvider project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/QWYNG/openssl_provider/blob/main/CODE_OF_CONDUCT.md).
