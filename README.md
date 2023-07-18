@@ -1,3 +1,7 @@
+## NOTICE
+The functionality of this Gem has been merged into `ruby/openssl`  
+For further information, please visit https://github.com/ruby/openssl/pull/635.
+
 # OpenSSL::Provider
 The concept of provider was introduced with OpenSSL 3.
 https://www.openssl.org/docs/man3.0/man7/migration_guide.html
